@@ -9,7 +9,7 @@ export default {
         'neutral-gray':'rgb(50,53,60)',
         'very-bright-blue':'rgb(26,159,255)',
         'dark-blue':'rgb(59,100,144)',
-        'text-white':'rgb(177,176,175)',
+        'text-white':'rgb(255,250,224)',
         'gray-bright-blue':'rgb(32,59,86)',
         'bright-blue':'rgb(44,116,255)',
         'very-dark-blue':'rgb(27,40,56)',

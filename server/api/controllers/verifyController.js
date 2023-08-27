@@ -4,6 +4,7 @@ import { customerModel } from "../models/customerModel.js";
 
 export default async function verifyController(req,res){
     const emailToken=req.params.emailToken
+    console.log(emailToken)
     try{
         const isEmailToken=await tokenModel.findOne({token:emailToken}).exec()
 

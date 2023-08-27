@@ -1,6 +1,6 @@
 import { useState } from "react"
 import useStrInputs from "../util/hooks/useStrInputs"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, json, useNavigate } from "react-router-dom"
 import {useUserContext} from "./components/userContex"
 import LoadingSpinner from "./components/LoadingSpinner"
 
@@ -16,13 +16,7 @@ export default function LoginFormPage({userType}){
         setIsLoading(true)
 
         const result=await submitInputToServer()
-        if(result.successfull){
-            setUserInfo({
-                name:result.userName,
-                gmail:'',
-                userType:'dev',
-                userId:result.userId
-            })
+        if(result.successful){
             navigate('/devboard')
         }
         else{setStrErrMess(oldErrorMess=>{
@@ -37,7 +31,9 @@ export default function LoginFormPage({userType}){
 
     async function submitInputToServer(){
         try{
-            const response=await fetch(`http://localhost:8080/api/login/${userType}`,{
+            const response=await fetch(`${import.meta.env.VITE_BASE_URL}:${import.meta.env.VITE_API_PORT}/api/login/${userType}`,{
+                credentials: 'include',
+                withCredntials: true,
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'

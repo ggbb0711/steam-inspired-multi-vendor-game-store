@@ -6,8 +6,8 @@ import loginSchema from '../../utils/express-validation-schemas/loginSchema.js'
 import loginController from '../controllers/loginController.js'
 dotenv.config()
 
-const login=express.Router()
+const loginRouter=express.Router()
 
-login.post('/:usertype',validate(checkSchema(loginSchema)),loginController)
+loginRouter.post('/:usertype',validate(checkSchema(loginSchema)),loginController)
 
-export {login}
+export {loginRouter}

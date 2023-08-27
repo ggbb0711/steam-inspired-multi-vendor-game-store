@@ -7,6 +7,7 @@ import LoginFormPage from './pages/LoginFormPage'
 import DevBoardPage from './pages/DevBoardPage'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import EmailVerificationPage from './pages/EmailVerificationPage'
+import PersistLogin from './pages/components/PersistLogin'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,8 +17,11 @@ function App() {
       <Routes>
         <Route path='/' element={ <RegisterFormPage userType={'dev'}/>}></Route>
         <Route path='/login' element={<LoginFormPage userType={'dev'}/>}></Route>
-        <Route path='/devboard' element={<DevBoardPage/>}></Route>
         <Route path='/verify/:token' element={<EmailVerificationPage/>}></Route>
+
+        <Route element={<PersistLogin/>}>
+          <Route path='/devboard' element={<DevBoardPage/>}></Route>
+        </Route>
       </Routes>
     </div>
   )

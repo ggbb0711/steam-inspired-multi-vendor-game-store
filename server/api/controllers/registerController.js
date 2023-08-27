@@ -20,10 +20,10 @@ export default async function registerController(req,res){
             await tokenModel.create({token,userType,accountId:newModel._id})
             const url=`${process.env.BASE_URL}:${process.env.CLIENT_PORT}/verify/${token}`
             sendMail(email,'Email verification',url)
-            res.status(201).json({successfull:true,message:'Please check your email for verification'})
+            res.status(201).json({successful:true,message:'Please check your email for verification'})
         }
         catch(err){
-            res.status(500).json({successfull:false,message:'Cannot create this user'})
+            res.status(500).json({successful:false,message:'Cannot create this user'})
         }
     })
 }

@@ -2,16 +2,16 @@ import express from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import userModel from '../models/devModel.js'
-import verifyToken from '../middlewares/verifyToken'
 import uploadMedia from '../middlewares/uploadMedia'
+import verifyJWTAccessToken from '../middlewares/verifyJWTAccessToken.js'
+import logoutController from '../controllers/logoutController.js'
 
-const router=express.Router()
+const devBoardRouter=express.Router()
 
-router.use(verifyToken)
 
-router.get('/',(req,res)=>{
-})
 
-router.post('/uploadGame',uploadMedia,(req,res)=>{
+devBoardRouter.post('/uploadGame',verifyJWTAccessToken,uploadMedia,(req,res)=>{
     
 })
+
+devBoardRouter.get('/logout',verifyJWTAccessToken,logoutController)

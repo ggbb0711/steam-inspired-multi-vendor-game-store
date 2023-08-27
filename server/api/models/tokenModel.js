@@ -8,8 +8,8 @@ const tokenSchema=Schema({
     accountId:{type:mongoose.Schema.Types.ObjectId,ref:function(){ return this.userType }},
     expireAt: {
         type: Date,
-        default: Date.now(),
-        index: { expires: 300 },
+        default:new Date(Date.now() + (5 * 60 * 1000)),
+        index: { expireAfterSeconds: 300 },
     },
 })
 

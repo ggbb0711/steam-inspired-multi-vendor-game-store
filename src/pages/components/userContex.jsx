@@ -5,10 +5,14 @@ const userContext=createContext(null)
 function UserContext({children}){
     const [userInfo,setUserInfo]=useState({
         name:'',
-        gmail:'',
+        email:'',
         userType:'',
         userId:''
     })
+
+    useEffect(()=>{
+        
+    },[])
 
 
     return(

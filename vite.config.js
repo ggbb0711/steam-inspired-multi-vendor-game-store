@@ -1,11 +1,22 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import http from "https";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  // define: {
-  //   'process.env.VITE_API_PORT': process.env.VITE_API_PORT,
-  //   'process.env.VITE_BASE_URL':process.env.VITE_BASE_URL
-  // }
+  server: {
+    port:3000,
+    host:true,
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:8080/',
+    //     changeOrigin: true,
+    //     secure: false,
+    //     // agent: new http.Agent(),
+    //     ws:true,
+    //     rewrite: (path) => path.replace(/^\/api/, '')
+    //   },
+    // }
+  }
 })

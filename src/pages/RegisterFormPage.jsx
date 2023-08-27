@@ -13,7 +13,7 @@ export default function RegisterFormPage({userType}){
         setIsLoading(true)
         const result=await submitInputToServer()
 
-        if(result.successfull) setSuccessfullRegister(true)
+        if(result.successful) setSuccessfullRegister(true)
         else{setStrErrMess(oldErrorMess=>{
             for (const error in result){
                 oldErrorMess[error]=result[error]
@@ -28,7 +28,7 @@ export default function RegisterFormPage({userType}){
 
     async function submitInputToServer(){
         try{
-            const response=await fetch(`http://localhost:8080/api/register/${userType}`,{
+            const response=await fetch(`/api/register/${userType}`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -87,7 +87,5 @@ export default function RegisterFormPage({userType}){
                 </div>
             )}
         </div>
-        
-        
     )
 }

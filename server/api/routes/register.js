@@ -6,9 +6,9 @@ import registrationSchema from '../../utils/express-validation-schemas/registrat
 import registerController from '../controllers/registerController.js'
 dotenv.config()
 
-const register=express.Router()
+const registerRouter=express.Router()
 
 
-register.post('/:usertype',validate(checkSchema(registrationSchema)),registerController)
+registerRouter.post('/:usertype',validate(checkSchema(registrationSchema)),registerController)
 
-export {register} 
+export {registerRouter} 
