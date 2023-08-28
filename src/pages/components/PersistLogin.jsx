@@ -23,7 +23,7 @@ export default function PersistLogin({out}){
                     const refreshToken=await refreshAccessToken()
                     //Log out if the refresh token is invalid
                     if(!refreshToken.successful){
-                        navigate('/login')
+                        navigate('/login',{replace:true})
                         return
                     }
                     localStorage.setItem('accesstoken',refreshToken.accessToken)
