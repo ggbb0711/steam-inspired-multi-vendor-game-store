@@ -7,28 +7,28 @@ export default function Header({firstGroup,secondGroup,thirdGroup}){
 
     return (
         <>
-            <div className="flex justify-between bg-neutral-black p-4 relative">
+            <div className="flex justify-between bg-neutral-black text-text-white p-4 relative">
 
                 {/* Mobile */}
-                <div className="flex justify-between items-start gap-2 md:hidden">
+                <div className="flex justify-between items-start gap-4 md:hidden">
                     {firstGroup.map((element,i)=><div key={i}>{element.src.mobile}</div>)}
                 </div>
-                <div className="flex justify-between items-start gap-2 md:hidden">
+                <div className="flex justify-between items-start gap-4 md:hidden">
                     {secondGroup.map((element,i)=><div key={i}>{element.src.mobile}</div>)}
                 </div>
-                <div className="flex justify-between items-start gap-2 md:hidden">
+                <div className="flex justify-between items-start gap-4 md:hidden">
                     {thirdGroup.map((element,i)=><div key={i}>{element.src.mobile}</div>)}
                 </div>
 
 
                 {/* Desktop */}
-                <div className="justify-between items-start gap-2 hidden md:flex">
+                <div className="justify-between items-start gap-4 hidden md:flex">
                     {firstGroup.map((element,i)=><div key={i}>{element.src.desktop}</div>)}
                 </div>
-                <div className="justify-between items-start gap-2 hidden md:flex">
+                <div className="justify-between items-start gap-4 hidden md:flex">
                     {secondGroup.map((element,i)=><div key={i}>{element.src.desktop}</div>)}
                 </div>
-                <div className="justify-between items-start gap-2 hidden md:flex">
+                <div className="justify-between items-start gap-4 hidden md:flex">
                     {thirdGroup.map((element,i)=><div key={i}>{element.src.desktop}</div>)}
                 </div>
 
