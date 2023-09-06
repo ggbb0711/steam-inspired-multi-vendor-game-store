@@ -3,6 +3,7 @@ import createAccessToken from "../../utils/createAccessToken.js"
 
 export default function refreshTokenController(req,res){
     const RefreshJWTtoken=req.signedCookies.RefreshJWTtoken
+    console.log(RefreshJWTtoken)
 
     if(RefreshJWTtoken){
         jwt.verify(RefreshJWTtoken,process.env.VITE_SECRET_JWTREFRESHTOKEN_KEY,(err,authData)=>{

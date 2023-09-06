@@ -57,7 +57,7 @@ export default function LoginFormPage({userType}){
     }
 
     return(
-        <div className="min-h-screen bg-very-dark-blue flex justify-center items-center">
+        <section className="min-h-screen bg-very-dark-blue flex justify-center items-center">
             {(isLoading)?
             <LoadingSpinner></LoadingSpinner>:
                 <form className="h-[500px] max-w-[600px] bg-neutral-black flex flex-col justify-center items-center gap-2 p-4" onSubmit={handleSubmit}>
@@ -78,6 +78,6 @@ export default function LoginFormPage({userType}){
                     <Link className="text-bright-blue" to={'/'}>Register</Link>
                 </form>
             }
-        </div>
+        </section>
     )
 }

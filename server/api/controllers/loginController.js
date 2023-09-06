@@ -21,7 +21,7 @@ export default async function loginController(req,res){
             const refreshToken=createRefreshToken({userName:user.name,email:user.email},userType)
             const accessToken=createAccessToken({userName:user.name,email:user.email},userType)
             res.cookie('RefreshJWTtoken',refreshToken,{
-                maxAge: 1000*60*30,
+                maxAge: 1000*60*60*48,
                 httpOnly:true,
                 signed: true,
             }).status(200).json({successful:true,accessToken,userName:user.name,userId:user._id})

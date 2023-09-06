@@ -8,6 +8,8 @@ import DevBoardPage from './pages/DevBoardPage'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import EmailVerificationPage from './pages/EmailVerificationPage'
 import PersistLogin from './pages/components/PersistLogin'
+import YourGamesDevPage from './pages/YourGamesDevPage'
+import CreateGamePage from './pages/CreateGamePage'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,7 +22,10 @@ function App() {
         <Route path='/verify/:token' element={<EmailVerificationPage/>}></Route>
 
         <Route element={<PersistLogin/>}>
-          <Route path='/devboard' element={<DevBoardPage/>}></Route>
+          <Route path='/devboard' element={<DevBoardPage/>}>
+            <Route path='yourgame' element={<YourGamesDevPage/>}></Route>
+            <Route path='creategame' element={<CreateGamePage/>}></Route>
+          </Route>
         </Route>
       </Routes>
     </div>

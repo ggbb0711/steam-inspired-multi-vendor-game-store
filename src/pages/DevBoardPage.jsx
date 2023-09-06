@@ -7,6 +7,7 @@ import SlideInMenu from "../util/components/LayOut/SlideInMenu/SlideInMenu"
 import HeaderLink from "../util/components/LayOut/Header/HeaderLink"
 import HeaderDropDown from "../util/components/LayOut/Header/HeaderDropDown"
 import Header from "../util/components/LayOut/Header/Header"
+import { Outlet } from "react-router-dom"
 
 export default function DevBoardPage(){
     const {userInfo}=useUserContext()
@@ -56,7 +57,7 @@ export default function DevBoardPage(){
     ]
 
     return(
-    <div className="w-full h-screen relative">
+    <section className="w-full min-h-screen relative">
         <SlideInMenu 
             firstGroup={firstGroupSlideInElement}
             secondGroup={secondGroupSlideInElement}
@@ -69,5 +70,6 @@ export default function DevBoardPage(){
             secondGroup={seconGroupHeaderElements}
             thirdGroup={[]}
         ></Header>
-    </div>)
+        <Outlet></Outlet>
+    </section>)
 }

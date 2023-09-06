@@ -52,7 +52,7 @@ export default function RegisterFormPage({userType}){
     }
 
     return(
-        <div className="min-h-screen bg-very-dark-blue flex justify-center items-center relative">
+        <section className="min-h-screen bg-very-dark-blue flex justify-center items-center relative">
             {(!successfullRegister?
                 isLoading?
                 <LoadingSpinner></LoadingSpinner>
@@ -86,6 +86,6 @@ export default function RegisterFormPage({userType}){
                     <Link to={'/login'} className="text-bright-blue">Sign in</Link>
                 </div>
             )}
-        </div>
+        </section>
     )
 }

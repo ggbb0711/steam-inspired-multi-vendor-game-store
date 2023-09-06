@@ -4,8 +4,9 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import {apirouter} from './api/routes/api.js'
 import cookieParser from 'cookie-parser'
-import setHeader from './api/middlewares/setHeader.js'
+import { cloudinaryObject } from './utils/cloudinaryObject.js'
 dotenv.config()
+
 
 const app=express()
 
@@ -18,20 +19,8 @@ app.use(cors({
   }))
 app.use(express.json())
 app.use(cookieParser(process.env.SECRET_COOKIE))
-// app.use(setHeader)
 mongoose.connect(process.env.MONGO_CONNECTION)
-// const connect=mongoose.createConnection(process.env.MONGO_CONNECTION,{
-//     useNewUrlParser:true,
-//     useUnifiedTopology:true
-// })
 
-// let gfs
-
-// connect.once('open',()=>{
-//     gfs=new mongoose.mongo.GridFSBucket(connect.db, {
-//         bucketName: 'uploads'
-//      });
-// })
 
 app.use('/api',apirouter)
 
