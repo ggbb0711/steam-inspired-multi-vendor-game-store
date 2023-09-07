@@ -82,7 +82,7 @@ function useImgFiles(maxfile){
         for(let file of e.target.files){
             if(imgArr.length>=maxfile) break
             file=new File([file],`${uuid()}.png`)
-            imgArr=[...imgArr,{src:URL.createObjectURL(file),fileObject:file,name:file.name}]
+            imgArr=[...imgArr,{src:URL.createObjectURL(file),fileObject:file,name:file.name.split('.')[0]}]
         }
         setImgFiles(imgArr)
     }
@@ -100,7 +100,7 @@ function useImgFiles(maxfile){
         file=new File([file],`${uuid()}.png`)
         //File that should be deleted on Cloudinary (They don't have the file object property)
         if(!clone[index].fileObject)setDeletedFiles([...deletedFiles,clone[index]])
-        clone.splice(index,1,{src:URL.createObjectURL(file),fileObject:file,name:file.name})
+        clone.splice(index,1,{src:URL.createObjectURL(file),fileObject:file,name:file.name.split('.')[0]})
         setImgFiles(clone)
     }
 

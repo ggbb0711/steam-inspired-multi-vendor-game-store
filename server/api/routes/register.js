@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import validate from '../../utils/validate.js'
 import { checkSchema } from 'express-validator'
 import registrationSchema from '../../utils/express-validation-schemas/registrationSchema.js'
-import registerController from '../controllers/registerController.js'
+import registerController from '../controllers/registerControllers/registerController.js'
 dotenv.config()
 
 const registerRouter=express.Router()

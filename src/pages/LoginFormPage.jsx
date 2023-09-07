@@ -20,8 +20,8 @@ export default function LoginFormPage({userType}){
             navigate('/devboard')
         }
         else{setStrErrMess(oldErrorMess=>{
-            for (const error in result){
-                oldErrorMess[error]=result[error]
+            for (const error in result.err){
+                oldErrorMess[error]=result.err[error]
             }
             return oldErrorMess
         })}

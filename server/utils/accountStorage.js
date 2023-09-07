@@ -8,6 +8,9 @@ const accountStorage=new CloudinaryStorage({
         folder:'Game images',
         use_filename:true,
         unique_filename:false,
+        public_id:(req,file)=>{
+            return file.originalname.split('.')[0]
+        }
     }
 })
 

@@ -8,7 +8,7 @@ export default function refreshTokenController(req,res){
     if(RefreshJWTtoken){
         jwt.verify(RefreshJWTtoken,process.env.VITE_SECRET_JWTREFRESHTOKEN_KEY,(err,authData)=>{
             if(err){
-                return res.status(401).json({successful:false,message:'RefreshToken is not valid'})
+                return res.status(401).json({successful:false, err:{ system:'RefreshToken is not valid' } })
             }
             else{
                 delete authData.exp
@@ -19,6 +19,6 @@ export default function refreshTokenController(req,res){
         })
     }
     else{
-        return res.status(400).json({successful:false,system:'No token found'})
+        return res.status(400).json({successful:false,err:{ system:'No RefreshToken found' }})
     }
 }

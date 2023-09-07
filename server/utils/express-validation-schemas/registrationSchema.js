@@ -4,7 +4,7 @@ import { customerModel } from '../../api/models/customerModel.js'
 
 const registrationSchema={
     name:{
-        // trim:true,
+        trim:true,
         notEmpty:true,
         errorMessage:'Name cannot be empty',
         custom:{
@@ -18,7 +18,7 @@ const registrationSchema={
         }
     },
     email:{
-        // trim:true,
+        trim:true,
         notEmpty:{ errorMessage:'Email must not be empty' },
         exists:{ errorMessage:'Email is required' },
         isEmail:{ errorMessage:'Email is invalid' },
@@ -34,7 +34,7 @@ const registrationSchema={
         errorMessage:'Bla bal'
     },
     password:{
-        // trim:true,
+        trim:true,
         matches: {
             options: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/g,
         },

@@ -10,11 +10,12 @@ export default function validate(validations){
 
         //For some reason i keep getting the 'Cannot convert undefined or null to object' error, so i'm going to ignore it for now
         result.errors.forEach(error=>{
+            console.log(error)
             if(!errorMess[error.path]&&error.msg!=='Cannot convert undefined or null to object')errorMess[error.path]=error.msg
         })
 
         if(Object.keys(errorMess).length===0) return next()
-        
-        return res.status(400).json({successfull:false,...errorMess})
+
+        return res.status(400).json({successfull:false,err:{...errorMess}})
     }
 }

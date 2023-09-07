@@ -10,11 +10,12 @@ import uuid from "react-uuid"
 
 export default function CreateGamePage(){
     const [strInputs,setStrInput]=useStrInputs({title:'',price:0,genres:'',desc:''})
-    const [errorMess,setStrErrMess]=useState({title:'',price:'',genres:'',desc:'',system:''})
+    const [errorMess,setStrErrMess]=useState({title:'',price:'',genres:'',desc:'',thumbnailImage:'',carouselImages:'',system:''})
     const [genreList,setGenreList]=useState([])
-    const [imgArr,handleUploadImg,deletedImgArrFiles,deleteUploadImg,changeUploadImg]=useImgFiles(8)
-    const [thumbnailImg,setThumbnailImg,deletedThumbnailImg,deleteThumbnailImg,changeThumbnailImg]=useImgFiles(1)
+    const [carouselImages,handleUploadImg,deletedCarouselImagesFiles,deleteUploadImg,changeUploadImg]=useImgFiles(8)
+    const [thumbnailImage,setThumbnailImage,deletedThumbnailImage,deleteThumbnailImage,changeThumbnailImage]=useImgFiles(1)
     const [isLoading,setIsLoading]=useState(false)
+    const {userInfo}=useUserContext()
 
 
     async function handleSubmit(e){
@@ -23,14 +24,19 @@ export default function CreateGamePage(){
 
         const result=await submitInputToServer()
         if(result.successful){
-            console.log('yEAH')
+            console.log(result.game)
         }
-        else{setStrErrMess(oldErrorMess=>{
-            for (const error in result){
-                oldErrorMess[error]=result[error]
-            }
-            return oldErrorMess
-        })}
+        else{
+            setStrErrMess(oldErrorMess=>{
+                for (const error in result.err){
+                    oldErrorMess[error]=result.err[error]
+                }
+                
+                return oldErrorMess
+            })
+            console.log(result)
+        }
+        
         setIsLoading(false)
         return
     }
@@ -39,37 +45,43 @@ export default function CreateGamePage(){
         try{
             const form=new FormData()
             form.append('title',strInputs.title)
+            form.append('dev',userInfo.name)
             form.append('price',strInputs.price)
             form.append('genres',JSON.stringify(genreList))
             form.append('desc',strInputs.desc)
-            //Image files will be upload with an array that has the name and the src
-            form.append('thumbnailImage',JSON.stringify({name:thumbnailImg[0].name,src:thumbnailImg[0].src}))
-            //All the file with file object are newly uploaded and should be upload to cloudinary
-            form.append('uploadThumbnailImage',(thumbnailImg[0].fileObject)?thumbnailImg[0].fileObject:'')
+            if(thumbnailImage.length>0){
+                //Image files will be upload with an array that has the name and the src
+                form.append('thumbnailImage',JSON.stringify([{name:thumbnailImage[0].name,src:thumbnailImage[0].src}]))
+                //All the file with file object are newly uploaded and should be upload to cloudinary
+                form.append('uploadThumbnailImage',(thumbnailImage[0].fileObject)?thumbnailImage[0].fileObject:'')
+            }
+            else{
+                form.append('thumbnailImage','[]')
+                form.append('uploadThumbnailImage','')
+            }
             //All the file that got replaced or deleted will be put into an array so that the server can know what to delete
-            form.append('deltedThumbnailImages',(deletedThumbnailImg[0])?deleteThumbnailImg[0]:'')
+            form.append('deletedThumbnailImages',JSON.stringify(deletedThumbnailImage))
+            
             //Do the same thing like thumbnail image
-            let carouselImages=[]
-            for(const img of imgArr){
-                carouselImages=[...carouselImages,{name:img.name,src:img.src}]
-                if(img.fileObject) form.append('uploadCarouselImages',img.fileObject)
+            if(carouselImages.length>0){
+                let carouselImages=[]
+                for(const img of carouselImages){
+                    carouselImages=[...carouselImages,{name:img.name,src:img.src}]
+                    if(img.fileObject) form.append('uploadCarouselImages',img.fileObject)
+                }
+                form.append('carouselImages',JSON.stringify(carouselImages))
             }
-            console.log(carouselImages)
-            form.append('carouselImages',JSON.stringify(carouselImages))
-            if(!form.get('uploadCarouselImages')) form.append('uploadCarouselImages','')
-            let deltedCarouselImages=[]
-            for(const img of deletedImgArrFiles){
-                let deltedCarouselImages=[...deltedCarouselImages,{name:img.name,src:img.src}]
-                form.append('deltedCarouselImages',JSON.stringify({name:img.name,src:img.src}))
+            else{
+                form.append('carouselImages','[]')
+                form.append('uploadCarouselImages','')
             }
-            form.append('deltedCarouselImages',JSON.stringify(deltedCarouselImages))
-            if(!form.get('deltedCarouselImages')) form.append('deltedCarouselImages','')
+            form.append('deletedCarouselImages',JSON.stringify(deletedCarouselImagesFiles))
+
             for(const el of form.entries()){
                 console.log(el)
             }
 
-
-            const response=await fetch(`${import.meta.env.VITE_BASE_URL}:${import.meta.env.VITE_API_PORT}/api/setgame`,{
+            const response=await fetch(`${import.meta.env.VITE_BASE_URL}:${import.meta.env.VITE_API_PORT}/api/creategame`,{
                 credentials: 'include',
                 withCredntials: true,
                 // headers:{
@@ -100,18 +112,18 @@ export default function CreateGamePage(){
                 <div className="w-full relative">
                     <p className="text-bright-blue">Add thubmnail for your game</p>
                     <div className="flex items-center justify-center relative">
-                        {thumbnailImg.length>0?
+                        {thumbnailImage.length>0?
                             <div className="w-full flex flex-col justify-center items-center gap-2">
-                                <img className="aspect-[4/3] w-[100%] min-w-[250px] max-w-[400px]" src={thumbnailImg[0].src} alt={thumbnailImg.name}/>
+                                <img className="aspect-[4/3] w-[100%] min-w-[250px] max-w-[400px]" src={thumbnailImage[0].src} alt={thumbnailImage.name}/>
                                 <div className="w-full flex justify-between items-center gap-2 text-text-white">
                                     <button className="cursor-pointer text-2xl bg-red-500 p-2 flex flex-col justify-center items-center flex-1"
-                                    onClick={()=>deleteThumbnailImg(0)}
+                                    onClick={()=>deleteThumbnailImage(0)}
                                     >
                                         <AiFillDelete/>
                                         <p>Delete</p>
                                     </button>
                                     <button className="cursor-pointer text-2xl bg-bright-blue p-2 flex flex-col justify-center items-center flex-1 relative"
-                                    onInput={(e)=>changeThumbnailImg(0,e.target.files[0])}
+                                    onInput={(e)=>changeThumbnailImage(0,e.target.files[0])}
                                     >
                                         <CgArrowsExchange/>
                                         <p>Change file</p>
@@ -122,14 +134,16 @@ export default function CreateGamePage(){
                         :
                         <div className="aspect-[4/3] w-[100%] min-w-[250px] max-w-[400px] h relative">
                             <div className="bg-bright-blue w-full h-full flex justify-center items-center"><AiFillFileAdd size={28}/></div>
-                            <input className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" type="file" accept="image/png, image/jpeg" id="images" name="images" onInput={setThumbnailImg}/>
+                            <input className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer" type="file" accept="image/png, image/jpeg" id="images" name="images" onInput={setThumbnailImage}/>
                         </div>
                         }
                     </div>
+                    <p className="text-xs mt-2 text-red-500">{errorMess.thumbnailImage}</p>
                 </div>
                 <div className="w-full">
                     <p className="text-bright-blue">Add images for your game</p>
-                    <AddImgCarousel imgArr={imgArr} style={''} maxfile={8} handleUploadImg={handleUploadImg} handleDeleteImg={deleteUploadImg} handleChangeImg={changeUploadImg}/>
+                    <AddImgCarousel imgArr={carouselImages} style={''} maxfile={8} handleUploadImg={handleUploadImg} handleDeleteImg={deleteUploadImg} handleChangeImg={changeUploadImg}/>
+                    <p className="text-xs text-red-500">{errorMess.carouselImages}</p>
                 </div>
             </section>
             <section className="w-full flex flex-col justify-between items-center gap-3">
@@ -188,7 +202,7 @@ export default function CreateGamePage(){
                         </div>
                     </div>
             </section>
-            <input type="submit" className="p-2 bg-bright-blue text-text-white" value={'Create game'}/>
+            <input type="submit" className="p-2 bg-bright-blue text-text-white cursor-pointer" value={'Create game'}/>
             <p>{errorMess.system}</p>
             {isLoading?<LoadingSpinner></LoadingSpinner>:<></>}
         </form>

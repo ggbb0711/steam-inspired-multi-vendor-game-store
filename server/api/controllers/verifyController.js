@@ -13,20 +13,20 @@ export default async function verifyController(req,res){
             try{
                 await model.findByIdAndUpdate(isEmailToken.accountId, {verified:true}).exec()
 
-                res.status(200).json({successfull:true,message:'Email verified successfully'})
+                return res.status(200).json({successfull:true,message:'Email verified successfully'})
             }
 
             catch(err){
-                res.status(500).json({successfull:false,message:'Can\'t update user'})
+                return res.status(500).json({successfull:false, err:{ system:'Can\'t update user' } })
             }
         }
         else{
-            res.status(404).json({successfull:false,message:'Token is not found'})
+            return res.status(404).json({successfull:false, err:{ system:'Token is not found' } })
         }
     }
     catch(err){
         console.log('Error found: ',err)
-        res.status(500).json({successfull:false,message:'Something went wrong with the server; can\'t find emailToken'})
+        return res.status(500).json({successfull:false, err:{ system:'Something went wrong with the server; can\'t find emailToken' } })
     }
 
 } 

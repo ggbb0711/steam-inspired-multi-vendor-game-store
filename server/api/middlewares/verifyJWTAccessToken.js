@@ -6,7 +6,7 @@ export default function verifyJWTAccessToken(req,res,next){
     if(accessToken){
         Jwt.verify(accessToken,process.env.VITE_SECRET_JWTACCESSTOKEN_KEY,(err,authData)=>{
             if(err){
-                return res.status(401).json({successful:false,message:'Accesstoken is not valid'})
+                return res.status(401).json({successful:false,err:{message:'Accesstoken is not valid'}})
             }
             else{
                 delete authData.exp
@@ -18,6 +18,6 @@ export default function verifyJWTAccessToken(req,res,next){
         
     }
     else{
-        return res.status(400).json({successful:false,message:'No token found'})
+        return res.status(400).json({successful:false, err:{ message:'No token found' } })
     }
 }

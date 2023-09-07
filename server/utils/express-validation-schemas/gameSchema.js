@@ -2,8 +2,9 @@
 
 const gameSchema={
     title:{
+        trim:true,
         notEmpty:true,
-        errorMessage:'Title cannot be empty',
+        errorMessage:'The title field cannot be empty',
         isLength:{
             errorMessage:'Title must contain at least 1 word',
             min:1
@@ -11,7 +12,17 @@ const gameSchema={
     },
     genres:{
         notEmpty:true,
-        errorMessage:'There must be at least one genre tag',
+        errorMessage:'The genres field cannot be empty',
+        custom:{
+            options: async (value)=>{
+                if(!Array.isArray(value)){
+                    return Promise.reject('Genres field must be an array')
+                }
+                if(value.length<1){
+                    return Promise.reject('There must be at least one genre tag')
+                }
+            }
+        }
     },
     "genres .*":{
         notEmpty:true,
@@ -23,10 +34,21 @@ const gameSchema={
         toLowerCase:true,
     },
     price:{
-        notEmpty:true,
-        errorMessage:'Price cannot be empty',
+        trim:true,
+        notEmpty:{ errorMessage:'The price field cannot be empty' },
+        custom:{
+            options:(value,{req})=>{
+                value=Number(value)
+                req.body.price=value.toFixed(2)
+                console.log(req.body.price)
+                if(value<0){
+                    return Promise.reject('Price cannot be lower than 00.00')
+                }
+            }
+        }
     },
     desc:{
+        trim:true,
         notEmpty:true,
         errorMessage:'Description cannot be empty',
         isLength:{
@@ -37,10 +59,30 @@ const gameSchema={
     thumbnailImage:{
         notEmpty:true,
         errorMessage:'Thubmnail image cannot be empty',
+        custom:{
+            options: async (value)=>{
+                if(!Array.isArray(value)){
+                    return Promise.reject('ThumbnailImage field must be an array')
+                }
+                if(value.length<1){
+                    return Promise.reject('There must be one thumbnailImage')
+                }
+            }
+        }
     },
     carouselImages:{
         notEmpty:true,
         errorMessage:'There must be at least one image',
+        custom:{
+            options: async (value)=>{
+                if(!Array.isArray(value)){
+                    return Promise.reject('CarouselImages field must be an array')
+                }
+                if(value.length<1){
+                    return Promise.reject('There must be at least one image')
+                }
+            }
+        }
     }
 }
 
