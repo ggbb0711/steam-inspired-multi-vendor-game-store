@@ -1,10 +1,12 @@
-import { gameModel } from "../../models/gameModel"
+import { gameModel } from "../../models/gameModel.js"
 
 
-export default function getEditGameController(req,res){
-    const gameId=req.query.gameId
+export default async function getEditGameController(req,res){
+    const gameId=req.params.gameId
+    
     try{
-        const selectedGame=gameModel.findById(gameId,'title genres price desc images').exec()
+        const selectedGame=await gameModel.findById(gameId,'title genres price desc images isPublished dev').exec()
+        if(selectedGame.dev!==req.user.userName) return res.status(403).json({successful:false,err:{system:'You cannot access this endpoint with this token'}})
         return res.status(200).json({successful:true,game:selectedGame})
     }
     catch{

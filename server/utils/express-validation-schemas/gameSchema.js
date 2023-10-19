@@ -15,11 +15,20 @@ const gameSchema={
         errorMessage:'The genres field cannot be empty',
         custom:{
             options: async (value)=>{
+                console.log(value)
                 if(!Array.isArray(value)){
                     return Promise.reject('Genres field must be an array')
                 }
+                //Checks for length
                 if(value.length<1){
                     return Promise.reject('There must be at least one genre tag')
+                }
+                if(value.length>5){
+                    return Promise.reject('There can only be 5 tags per game')
+                }
+                //Checks for dupliacate
+                if(value.length!==new set(value).length){
+                    return Promise.reject('There must be no duplicate tag')
                 }
             }
         }
@@ -37,10 +46,9 @@ const gameSchema={
         trim:true,
         notEmpty:{ errorMessage:'The price field cannot be empty' },
         custom:{
-            options:(value,{req})=>{
+            options:async (value,{req})=>{
                 value=Number(value)
                 req.body.price=value.toFixed(2)
-                console.log(req.body.price)
                 if(value<0){
                     return Promise.reject('Price cannot be lower than 00.00')
                 }
@@ -51,10 +59,13 @@ const gameSchema={
         trim:true,
         notEmpty:true,
         errorMessage:'Description cannot be empty',
-        isLength:{
-            errorMessage:'Description must contain at least 50 words',
-            min:50
-        },
+        custom:{
+            options: async (value)=>{
+                if(value.length<50){
+                    return Promise.reject('Description must contain at least 50 words')
+                }
+            }
+        }
     },
     thumbnailImage:{
         notEmpty:true,
@@ -72,7 +83,7 @@ const gameSchema={
     },
     carouselImages:{
         notEmpty:true,
-        errorMessage:'There must be at least one image',
+        errorMessage:'There must be at least 1 image',
         custom:{
             options: async (value)=>{
                 if(!Array.isArray(value)){

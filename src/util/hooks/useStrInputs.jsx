@@ -20,5 +20,5 @@ export default function useStrInputs(Inputs){
         setInputs(clone)
     }
 
-    return [inputs,changeInputs,resetInputs]
+    return [inputs,changeInputs,setInputs,resetInputs]
 }

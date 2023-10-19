@@ -15,6 +15,9 @@ export default {
         'very-dark-blue':'rgb(27,40,56)',
         'dark-green':'rgb(117,148,5)',
         'light-green':'rgb(190,238,17)'
+      },
+      screens:{
+        'lg':'900px'
       }
     },
   },

@@ -3,7 +3,7 @@ import createAccessToken from "../../utils/createAccessToken.js"
 
 export default function refreshTokenController(req,res){
     const RefreshJWTtoken=req.signedCookies.RefreshJWTtoken
-    console.log(RefreshJWTtoken)
+
 
     if(RefreshJWTtoken){
         jwt.verify(RefreshJWTtoken,process.env.VITE_SECRET_JWTREFRESHTOKEN_KEY,(err,authData)=>{
@@ -19,6 +19,6 @@ export default function refreshTokenController(req,res){
         })
     }
     else{
-        return res.status(400).json({successful:false,err:{ system:'No RefreshToken found' }})
+        return res.status(401).json({successful:false,err:{ system:'No RefreshToken found' }})
     }
 }

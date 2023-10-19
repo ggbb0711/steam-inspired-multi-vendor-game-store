@@ -1,4 +1,4 @@
-import { useUserContext } from "../../../../pages/components/userContex"
+import { useUserContext } from "../../Context/userContex"
 import { Link } from "react-router-dom"
 
 export default function Header({firstGroup,secondGroup,thirdGroup}){
@@ -7,7 +7,7 @@ export default function Header({firstGroup,secondGroup,thirdGroup}){
 
     return (
         <>
-            <div className="flex justify-between bg-neutral-black text-text-white p-4 relative">
+            <header className="z-[7] flex justify-between bg-neutral-black text-text-white p-4 relative">
 
                 {/* Mobile */}
                 <div className="flex justify-between items-start gap-4 md:hidden">
@@ -35,12 +35,12 @@ export default function Header({firstGroup,secondGroup,thirdGroup}){
 
                 <div className="absolute top-0 right-4 text-xs">
                     {userInfo.name?
-                    <p>Hello, {userInfo.name}|<span className="text-very-bright-blue"><Link>Logout</Link></span></p>
+                    <p>Hello, {userInfo.name}|<span className="text-very-bright-blue"><Link to={'/logout'}>Logout</Link></span></p>
                     :
-                    <p><span className="text-very-bright-blue"><Link>Login</Link></span>|<span className="text-very-bright-blue"><Link>Register</Link></span></p>
+                    <p><span className="text-very-bright-blue"><Link to={'/login'}>Login</Link></span>|<span className="text-very-bright-blue"><Link to={'/register'}>Register</Link></span></p>
                     }
                 </div>
-            </div> 
+            </header> 
         </>
     )
 }

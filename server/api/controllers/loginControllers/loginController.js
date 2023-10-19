@@ -18,8 +18,8 @@ export default async function loginController(req,res){
     try{
         const user=await model.findOne({email}).exec()
         if(user.verified){
-            const refreshToken=createRefreshToken({userName:user.name,email:user.email},userType)
-            const accessToken=createAccessToken({userName:user.name,email:user.email},userType)
+            const refreshToken=createRefreshToken({userName:user.name,email:user.email,userId:user._id},userType)
+            const accessToken=createAccessToken({userName:user.name,email:user.email,userId:user._id},userType)
             return res.cookie('RefreshJWTtoken',refreshToken,{
                 maxAge: 1000*60*60*48,
                 httpOnly:true,

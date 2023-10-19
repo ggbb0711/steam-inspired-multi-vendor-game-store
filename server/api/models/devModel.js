@@ -7,6 +7,8 @@ const devSchema=Schema({
     email:{type:String,require:true,unique:true},
     password:{type:String,require:true},
     verified:{type:Boolean,default:false},
+    totalEarning:{type:Number},
+    copiesSold:{type:Number},
 })
 
 const devModel=mongoose.model('dev',devSchema)

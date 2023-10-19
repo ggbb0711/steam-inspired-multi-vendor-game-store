@@ -4,7 +4,9 @@ import { uploadToCloudinary } from "../../../utils/cloudinaryHelperFunc.js";
 
 
 export default async function createGameController (req,res){
-    let { title, desc, dev, thumbnailImage, carouselImages}=req.body
+    let { title, desc, price, genres, thumbnailImage, carouselImages}=req.body
+    const devName=req.user.userName
+    console.log(devName)
     try{
         if(req.files.uploadCarouselImages && req.files.uploadThumbnailImage.length>0){
             let uploadThumbnailImage=await uploadToCloudinary(req.files.uploadThumbnailImage,400,300)
@@ -24,11 +26,24 @@ export default async function createGameController (req,res){
         const newGame=await gameModel.create({
             title:title,
             desc:desc,
-            // price:{type:Number},
-            dev:dev,
-            // genres:[{id:{type:mongoose.Schema.Types.ObjectId,ref:'genre'},name:{type:String}}],
-            // reviews:{totalRating:0,comments:[{id:{type:mongoose.Schema.Types.ObjectId,ref:'comment'}}]},
-            images:{ thumbnailImage:thumbnailImage[0], carouselImages }
+            price:price,
+            dev:devName,
+            genres:genres,
+            images:{ thumbnailImage:thumbnailImage[0], carouselImages },
+            isPublished:true,
+            reviews:{
+                totalReview:0,
+                reviewScore:{
+                    1:0,
+                    2:0,
+                    3:0,
+                    4:0,
+                    5:0,
+                }
+            },
+            recentReviews:[],
+            totalEarning:0,
+            copiesSold:0,
         })
         return res.status(200).json({successful:true,game:newGame})
     }

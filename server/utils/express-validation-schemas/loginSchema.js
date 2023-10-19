@@ -17,7 +17,7 @@ const loginSchema={
 
                 const user=await model.findOne({email:value})
 
-                if (Object.keys(user).length===0) return Promise.reject('The user with this email does not exist')
+                if (!user) return Promise.reject('The user with this email does not exist')
             }
         }
     },
@@ -31,10 +31,10 @@ const loginSchema={
             options: async(value,{req}) => {
                 const {email} = req.body
                 const model=(req.params.usertype==='dev')?devModel:customerModel
-
                 const user=await model.findOne({email})
+                if(!user) return Promise.reject('Please register with the email')
                 const match=await bcrypt.compare(value,user.password)
-
+            
                 if (!match) return Promise.reject('Password does not match')
             }
         }

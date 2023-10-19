@@ -8,10 +8,14 @@
     "dev": "vite && nodemon ./server/index.js",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "stripe:listen": "stripe listen --forward-to localhost:8080/webhook",
+    "stripe:trigger": "stripe trigger payment_intent.succeeded"
   },
   "dependencies": {
+    "@observablehq/plot": "^0.6.11",
     "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
     "c": "^1.1.1",
     "cloudinary": "^1.40.0",
     "cookie-parser": "^1.4.6",
@@ -31,8 +35,10 @@
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.2",
     "react-scripts": "^5.0.1",
+    "react-slick": "^0.29.0",
     "react-uuid": "^2.0.0",
     "socket.io": "^4.7.2",
+    "stripe": "^14.1.0",
     "swiper": "^10.2.0",
     "uuidv4": "^6.2.13"
   },
@@ -41,6 +47,7 @@
     "react-error-overlay": "6.0.9"
   },
   "devDependencies": {
+    "@types/node": "^20.8.7",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",

@@ -4,10 +4,11 @@ import { deleteFileFromCloudinary, uploadToCloudinary } from "../../../utils/clo
 
 
 export default async function editGameController (req,res){
-    const gameId=req.query.gameId
-    let { title, desc, thumbnailImage, deletedThumbnailImages, carouselImages, deletedCarouselImages}=req.body
+    const gameId=req.params.gameId
+    let { title, desc, price, genres, isPublished, thumbnailImage, deletedThumbnailImages, carouselImages, deletedCarouselImages}=req.body
+    console.log(isPublished)
     try{
-        if(req.files.uploadCarouselImages && req.files.uploadThumbnailImage.length>0){
+        if(req.files.uploadCarouselImages && req.files.uploadThumbnailImage?.length>0){
             let uploadThumbnailImage=await uploadToCloudinary(req.files.uploadThumbnailImage,400,300)
             //Replace the src of the image with the new one from cloudinary
             if(uploadThumbnailImage[thumbnailImage[0].name]) thumbnailImage[0].src=uploadThumbnailImage[thumbnailImage[0].name]
@@ -18,22 +19,22 @@ export default async function editGameController (req,res){
             carouselImages.forEach((image,imageId)=>{
                 //Replace the src of the image with the new one from cloudinary
                 if(uploadCarouselImages[image.name]) carouselImages[imageId].src=uploadCarouselImages[image.name]
-                console.log(image)
             })
         }
-
-        deleteFileFromCloudinary(deletedThumbnailImages)
-        deleteFileFromCloudinary(deletedCarouselImages)
+        await deleteFileFromCloudinary(deletedThumbnailImages)
+        await deleteFileFromCloudinary(deletedCarouselImages)
         
         const updatedGame=await gameModel.findByIdAndUpdate(gameId,{
-            title:title,
-            desc:desc,
-            // price:{type:Number},
-            // genres:[{id:{type:mongoose.Schema.Types.ObjectId,ref:'genre'},name:{type:String}}],
-            // reviews:{totalRating:0,comments:[{id:{type:mongoose.Schema.Types.ObjectId,ref:'comment'}}]},
-            images:{ thumbnailImage:thumbnailImage[0], carouselImages }
-        }).exec()
-        
+            '$set':{
+                title:title,
+                desc:desc,
+                price:price,
+                genres:genres,
+                isPublished:(isPublished==='true'),
+                // reviews:{totalRating:0,comments:[{id:{type:mongoose.Schema.Types.ObjectId,ref:'comment'}}]},
+                images:{ thumbnailImage:thumbnailImage[0], carouselImages }
+            }
+        },{new:true}).exec()
         return res.status(200).json({successful:true,game:updatedGame})
     }
     catch(err){
