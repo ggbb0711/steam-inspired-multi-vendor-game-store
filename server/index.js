@@ -33,10 +33,6 @@ mongoose.connect(process.env.MONGO_CONNECTION)
 
 app.use('/api',apirouter)
 app.use('/webhook',webhookRouter)
-app.use(express.static('dist'))
-app.get('/', function (req, res, next) {
-  res.sendFile(path.resolve('server/dist/index.html'))
-})
 
 
 app.listen(process.env.API_PORT||8080,'localhost')
