@@ -28,11 +28,12 @@ app.use(cors({
 }))
 app.use(cookieParser(process.env.SECRET_COOKIE))
 app.use(express.urlencoded({ extended: true }))
-mongoose.connect(process.env.MONGO_CONNECTION)
+mongoose.connect(process.env.MONGO_CONNECTION).then(()=>{
+  app.use('/api',apirouter)
+  app.use('/webhook',webhookRouter)
+  
+  
+  app.listen(process.env.API_PORT||8080,'localhost',()=>console.log('Server running on '+process.env.API_PORT))
+})
 
 
-app.use('/api',apirouter)
-app.use('/webhook',webhookRouter)
-
-
-app.listen(process.env.API_PORT||8080,'localhost')
