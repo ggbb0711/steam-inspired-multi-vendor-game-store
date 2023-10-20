@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 const webhookRouter=express.Router()
 
-webhookRouter.post('/',async (request, response) => {
+webhookRouter.post('/', express.raw({type: 'application/json'}),async (request, response) => {
     const sig = request.headers['stripe-signature'];
     let event;
   
