@@ -1,9 +1,11 @@
 import useAuthorizedFetch from "../hooks/useAuthorizedFetch"
+import dotenv from 'dotenv'
+
 
 export default async function fetchData({url,config},successcb,failcb,isAuthorizedRoute){
     const {authorizedFetch}=useAuthorizedFetch()
-    console.log(process.env.ENV,process.env.BASE_SERVER_URL)
-    if(process.env.ENV==='PRODUCTION') url=process.env.BASE_SERVER_URL+'/'+url
+    
+    if(import.meta.env.VITE_ENV==='PRODUCTION') url=import.meta.env.VITE_BASE_SERVER_URL+url
     
     try{
         let response

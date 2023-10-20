@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import {UserContext} from './util/components/Context/userContex.jsx'
 import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
-if(process.env.ENV==='PRODUCTION') disableReactDevTools()
+if(import.meta.env.VITE_ENV==='PRODUCTION') disableReactDevTools()
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
