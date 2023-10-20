@@ -2,6 +2,7 @@ import useAuthorizedFetch from "../hooks/useAuthorizedFetch"
 
 export default async function fetchData({url,config},successcb,failcb,isAuthorizedRoute){
     const {authorizedFetch}=useAuthorizedFetch()
+    console.log(process.env.ENV,process.env.BASE_SERVER_URL)
     if(process.env.ENV==='PRODUCTION') url=process.env.BASE_SERVER_URL+'/'+url
     
     try{
