@@ -15,7 +15,7 @@ const app=express()
 
 
 app.use(cors({
-    origin: `${process.env.BASE_URL}:${process.env.CLIENT_PORT}`,
+    origin: `${process.env.BASE_FRONTEND_URL}`,
     credentials: true,
     methods: "GET,POST,PUT,DELETE",
     optionsSuccessStatus: 200,
