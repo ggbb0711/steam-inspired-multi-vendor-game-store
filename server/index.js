@@ -1,4 +1,5 @@
 import express from 'express'
+import * as path from 'path'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
@@ -13,7 +14,7 @@ dotenv.config()
 const app=express()
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.BASE_FRONTEND_URL,
     credentials: true,
     methods: "GET,POST,PUT,DELETE",
     optionsSuccessStatus: 200,
