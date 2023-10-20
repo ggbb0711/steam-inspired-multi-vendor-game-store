@@ -18,7 +18,7 @@ export default async function registerController(req,res){
             const newModel=await model.create({name,email,password:hash})
             const token=randomBytes(127).toString('hex')
             await tokenModel.create({token,userType,accountId:newModel._id})
-            const url=`${process.env.BASE_URL}:${process.env.CLIENT_PORT}/verify/${token}`
+            const url=`${process.env.BASE_FRONTEND_URL}/verify/${token}`
             sendMail(email,'Email verification',url)
             return res.status(201).json({successful:true,system:'Please check your email for verification'})
         }
