@@ -32,8 +32,9 @@ mongoose.connect(process.env.MONGO_CONNECTION).then(()=>{
   app.use('/api',apirouter)
   app.use('/webhook',webhookRouter)
   
-  
-  app.listen(process.env.API_PORT||8080,'localhost',()=>console.log('Server running on '+process.env.API_PORT))
+  if(process.env.ENV==='PRODUCTION') app.listen(process.env.API_PORT||8080,$process.env.PRODUCTION_HOST,()=>console.log('Server running on '+process.env.API_PORT))
+
+  else{app.listen(process.env.API_PORT||8080,'localhost',()=>console.log('Server running on '+process.env.API_PORT))}
 })
 
 
