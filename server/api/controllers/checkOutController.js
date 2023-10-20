@@ -31,8 +31,8 @@ export default async function checkOutController(req,res){
         payment_intent_data:{
           metadata:{userId:req.user.userId,...passInItems},
         },
-        success_url: `${process.env.BASE_URL}:${process.env.CLIENT_PORT}/success`, 
-        cancel_url: `${process.env.BASE_URL}:${process.env.CLIENT_PORT}/cancel`, 
+        success_url: `${process.env.BASE_FRONTEND_URL}/success`, 
+        cancel_url: `${process.env.BASE_FRONTEND_URL}/cancel`, 
     })
     res.json({url: session.url})
   }
