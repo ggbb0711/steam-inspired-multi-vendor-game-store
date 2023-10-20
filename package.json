@@ -7,7 +7,7 @@
     "install-server": "cd server && npm install",
     "start-server": "cd server && node index.js",
     "install-client": "cd Frontend && npm install",
-    "build-client": "cd Frontend && npm run build",
+    "build-client": "cd Frontend && npm vite build",
     "start-client": "cd Frontend && npm run start"
   },
   "keywords": [],
