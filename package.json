@@ -5,7 +5,9 @@
   "version": "0.0.0",
   "proxy": "http://localhost:8080",
   "scripts": {
-    "dev": "vite && nodemon ./server/index.js",
+    "dev": "vite",
+    "start-server": "node server",
+    "install":"npm install",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",

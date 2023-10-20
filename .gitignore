@@ -1,4 +1,6 @@
 vite.config.js
+# Secret file
+.env
 
 # Logs
 logs
