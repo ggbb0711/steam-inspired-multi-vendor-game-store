@@ -21,6 +21,7 @@ export default function LoginFormPage({userType}){
                 headers:{
                     'Content-Type':'application/json'
                 },
+                credentials: "include",
                 body: JSON.stringify({...inputs})
             }
         },successCb,failCb)

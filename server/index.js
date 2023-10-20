@@ -1,5 +1,4 @@
 import express from 'express'
-import * as path from 'path'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
@@ -13,14 +12,13 @@ dotenv.config()
 
 const app=express()
 
-
 app.use(cors({
-    origin: process.env.BASE_FRONTEND_URL,
+    origin: 'http://localhost:3000',
     credentials: true,
     methods: "GET,POST,PUT,DELETE",
     optionsSuccessStatus: 200,
   }))
-  app.use(express.json({
+app.use(express.json({
     limit: '5mb',
     verify: (req, res, buf) => {
       req.rawBody = buf.toString();
