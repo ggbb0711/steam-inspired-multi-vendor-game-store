@@ -1,10 +1,8 @@
 import HamburgerIcon from "../../util/components/HamburgerIcon"
 import { useEffect, useState } from "react"
 import SlideInMenuLinks from "../../util/components/LayOut/SlideInMenu/SlideInMenuLinks"
-import SlideInMenuDropDown from "../../util/components/LayOut/SlideInMenu/SlideInMenuDropDown"
 import SlideInMenu from "../../util/components/LayOut/SlideInMenu/SlideInMenu"
 import HeaderLink from "../../util/components/LayOut/Header/HeaderLink"
-import HeaderDropDown from "../../util/components/LayOut/Header/HeaderDropDown"
 import Header from "../../util/components/LayOut/Header/Header"
 import { Outlet, useNavigate, Link } from "react-router-dom"
 import { useAuthorizedContext } from "../../util/components/Context/isAuthorizedContext"
@@ -34,7 +32,7 @@ export default function DevBoardPage(){
         },
     ]
 
-    const firstGroupSlideInElement=[{src:<SlideInMenuLinks path={'/devboard/yourgame'} text='DEVBOARD'/>}]
+    const firstGroupSlideInElement=[{src:<SlideInMenuLinks path={'/'} text='STORE'/>}]
     const secondGroupSlideInElement=[
         {src:<SlideInMenuLinks path={'/devboard/dev'} text='DEVBOARD'/>},
     ]

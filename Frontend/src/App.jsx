@@ -1,4 +1,6 @@
 import './index.css'
+import { Suspense, lazy } from 'react'
+
 import RegisterFormPage from './pages/Login-Register/RegisterFormPage'
 import LoginFormPage from './pages/Login-Register/LoginFormPage'
 import DevBoardPage from './pages/Dev board/DevBoardPage'
@@ -10,7 +12,7 @@ import CreateGamePage from './pages/Dev board/CreateGamePage'
 import EditGamePage from './pages/Dev board/EditGamePage'
 import AlertProvider from './util/components/Context/AlertContext'
 import AlertPopIn from './util/components/AlertPopIn'
-import LoginPage from './pages/Login-Register/LoginPage'
+const LoginPage=lazy(()=> import ('./pages/Login-Register/LoginPage'))
 import RegisterPage from './pages/Login-Register/Register'
 import StoreLayOut from './pages/Store/StoreLayOut'
 import HomePage from './pages/Store/Home Page/HomePage'
@@ -27,48 +29,51 @@ import SuccessPage from './pages/Store/SuccessPage'
 import FailPage from './pages/Store/FailPage'
 
 
+
 function App() {
   return (
     <div className='w-full min-h-screen'>
       <AlertProvider>
         <AlertPopIn></AlertPopIn>
           <AuthorizedContext>
-            <Routes>
-              <Route path='/register' element={<RegisterPage/>}></Route>
-              <Route path='/register/dev' element={ <RegisterFormPage userType={'dev'}/>}></Route>
-              <Route path='/register/customer' element={ <RegisterFormPage userType={'customer'}/>}></Route>
-              <Route path='/login' element={<LoginPage/>}></Route>
-              <Route path='/login/dev' element={<LoginFormPage userType={'dev'}/>}></Route>
-              <Route path='/login/customer' element={<LoginFormPage userType={'customer'}/>}></Route>
-              <Route path='/verify/:token' element={<EmailVerificationPage/>}></Route>
-              <Route path='/logout' element={<Logout/>}></Route>
+            <Suspense>
+              <Routes>
+                <Route path='/register' element={<RegisterPage/>}></Route>
+                <Route path='/register/dev' element={ <RegisterFormPage userType={'dev'}/>}></Route>
+                <Route path='/register/customer' element={ <RegisterFormPage userType={'customer'}/>}></Route>
+                <Route path='/login' element={<LoginPage/>}></Route>
+                <Route path='/login/dev' element={<LoginFormPage userType={'dev'}/>}></Route>
+                <Route path='/login/customer' element={<LoginFormPage userType={'customer'}/>}></Route>
+                <Route path='/verify/:token' element={<EmailVerificationPage/>}></Route>
+                <Route path='/logout' element={<Logout/>}></Route>
 
-              <Route path='/success' element={<SuccessPage/>}></Route>
-              <Route path='/cancel' element={<FailPage/>}></Route>
-              
-              <Route path='/' element={<StoreLayOut/>}>
-                <Route path='' element={<HomePage/>}></Route>
-                <Route path='/browse' element={<BrowseGame/>}></Route>
-                <Route path='/game/:gameId' element={<Game/>}></Route>
-              </Route>
-
-              <Route path='/library' element={<LibraryLayOut/>}>
-                <Route path='' element={<LibraryPage/>}></Route>
-              </Route>
-            
-              <Route path='/devboard' element={<DevBoardPage/>}>
-                <Route path='dev' element={<DevPage/>}>
-                  <Route path='yourgames' element={<YourGamesDevPage/>}></Route>
-                  <Route path='' element={<DevStatPage/>}></Route>
-                </Route>
+                <Route path='/success' element={<SuccessPage/>}></Route>
+                <Route path='/cancel' element={<FailPage/>}></Route>
                 
-                <Route path='devgame/:gameId' element={<DevGamePage/>}>
-                  <Route path='editgame' element={<EditGamePage></EditGamePage>}></Route>
-                  <Route path='' element={<DevGameStatPage/>}></Route>
+                <Route path='/' element={<StoreLayOut/>}>
+                  <Route path='' element={<HomePage/>}></Route>
+                  <Route path='/browse' element={<BrowseGame/>}></Route>
+                  <Route path='/game/:gameId' element={<Game/>}></Route>
                 </Route>
-                <Route path='creategame' element={<CreateGamePage/>}></Route>
-              </Route>
-            </Routes>
+
+                <Route path='/library' element={<LibraryLayOut/>}>
+                  <Route path='' element={<LibraryPage/>}></Route>
+                </Route>
+              
+                <Route path='/devboard' element={<DevBoardPage/>}>
+                  <Route path='dev' element={<DevPage/>}>
+                    <Route path='yourgames' element={<YourGamesDevPage/>}></Route>
+                    <Route path='' element={<DevStatPage/>}></Route>
+                  </Route>
+                  
+                  <Route path='devgame/:gameId' element={<DevGamePage/>}>
+                    <Route path='editgame' element={<EditGamePage></EditGamePage>}></Route>
+                    <Route path='' element={<DevGameStatPage/>}></Route>
+                  </Route>
+                  <Route path='creategame' element={<CreateGamePage/>}></Route>
+                </Route>
+              </Routes>
+            </Suspense>
           </AuthorizedContext>
       </AlertProvider>
     </div>
