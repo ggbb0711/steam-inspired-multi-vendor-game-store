@@ -18,14 +18,15 @@ async function homepageController(req,res){
                         thumbnailImage:'$images.thumbnailImage',
                         carouselImages:{$slice:['$images.carouselImages',2]}
                     },
-                    createdAt:1
+                    createdAt:1,
+                    copiesSold:1,
                 }
             },
             {
                 '$facet':{
                     mostPopular:[
-                        {'$sort':{'averageRating':-1}},
-                        {'$limit':3},
+                        {'$sort':{'averageRating':-1,'copiesSold':-1,}},
+                        {'$limit':6},
                     ],
                     populargenres:[
                         {'$unwind':'$genres'},
@@ -60,25 +61,6 @@ async function homepageController(req,res){
                 }
             },
         ])
-    
-        let idArr=[]
-        result[0].mostPopular.map((game)=>idArr.push(game._id))
-    
-        const mostPopularRecently=await gameModel.find({_id:{'$nin':idArr},averageRating:{$exists:true},isPublished:true}, {
-            title:1,
-            price:1,
-            averageRating:1,
-            genres:1,
-            images:{
-                thumbnailImage:'$images.thumbnailImage',
-                carouselImages:{$slice:['$images.carouselImages',2]}
-            },
-            createdAt:1
-        })
-        .sort({averageRating:-1,createdAt:-1,})
-        .limit(3)
-    
-        result[0].mostPopularRecently=mostPopularRecently
     
         res.json({
             successful:true,

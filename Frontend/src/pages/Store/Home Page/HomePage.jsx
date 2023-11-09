@@ -27,7 +27,7 @@ export default function HomePage(){
     })
 
     function successCb(result){
-        setCarouselCards([...result.result.mostPopularRecently,...result.result.mostPopular])
+        setCarouselCards([...result.result.mostPopular])
         setPopularGenresCard([...result.result.populargenres])
         setNewestGameCards([...result.result.newest])
     }
