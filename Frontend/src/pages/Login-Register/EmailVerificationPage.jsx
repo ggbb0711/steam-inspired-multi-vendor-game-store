@@ -6,12 +6,12 @@ import fetchData from "../../util/functions/fetchData";
 
 
 export default function EmailVerificationPage(){
-    const [isToken,setisToken]=useState(false)
+    const [isVerified,setIsVerified]=useState(false)
     const { token }=useParams()
     const {setALert}=useAlertContext()
 
     function successCb(result){
-        setisToken(result.successfull)
+        setIsVerified(result.successfull)
     }
 
     function failCb(){
@@ -25,14 +25,15 @@ export default function EmailVerificationPage(){
         },successCb,failCb)
     },[])
 
-    return((isToken)?
+    return(
         <div className="min-h-screen bg-very-dark-blue flex justify-center items-center">
-            <h1 className="text-bright-blue justify-self-start">Verification successfully</h1>
-            <Link className="text-bright-blue" to={'/login'}>Login</Link>
-        </div>:
-        <div className="min-h-screen bg-very-dark-blue flex justify-center items-center">
-            <h1 className="text-bright-blue justify-self-start">Error invalid link, please login to issue another link</h1>
-            <Link className="text-bright-blue" to={'/login'}>Login</Link>
+            <div className="max-w-[350px] bg-neutral-black text-center p-8 flex justify-between items-center flex-col gap-2">
+                {isVerified?
+                    <h1 className="text-bright-blue justify-self-start">Verification successfully</h1>:
+                    <h1 className="text-bright-blue justify-self-start">Error invalid link, please login to issue another link</h1>
+                }
+                <button className="bg-dark-green text-text-white cursor-pointer p-2"><Link to={'/login/'}>Login</Link></button>
+            </div>
         </div>
     )
 }
