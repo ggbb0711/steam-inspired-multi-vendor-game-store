@@ -9,9 +9,11 @@ export default function LastSixMonthStatGraph({data}){
         let maxCopies=0
         data.forEach(data=>{if(data.copiesSold>maxCopies) maxCopies=data.copiesSold})
 
+        let xDomain=data.map(d=>d.date)
+
         const plot = Plot.plot({
             style:'background: rgb(23,29,37); width: 100%;',
-            x: {label:null, type:'band'},
+            x: {label:null, type:'band', domain:xDomain},
             y: {label: 'Copies', domain:[0,10**((maxCopies).toString().length)]},
             marks: [
               Plot.axisX({ 
@@ -30,7 +32,7 @@ export default function LastSixMonthStatGraph({data}){
               Plot.ruleY([0],{
                 stroke:'rgb(117,148,5)'
               }),
-              Plot.barY(data, {x: "date", y: "copiesSold", fill: "rgb(26,159,255)", style:'height: 70px;'}),
+              Plot.barY(data, {x: "date", y: "copiesSold", fill: "rgb(26,159,255)"}),
               Plot.text(data, {x: "date", y: "copiesSold", textAnchor: "end", text:d=>d.copiesSold, dy: 10, dx:10, filter: d => d.copiesSold > 0, fontSize:'20px', fill: "rgb(255,250,224)" }),
             ]
           })

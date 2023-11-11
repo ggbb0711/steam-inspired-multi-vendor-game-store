@@ -43,7 +43,7 @@ export default function Game(){
                     <GameContainer game={gameInfo}/>
                     {gameInfo.isOwned&&!gameInfo.hasReviewed?<ReviewForm gameId={gameInfo._id}/>:<></>}
                     <GameOverallScore averageRating={gameInfo.averageRating} totalReview={gameInfo.reviews.totalReview} ratings={gameInfo.reviews.reviewScore}/>
-                    <ReviewContainer reviews={gameInfo.recentReviews||[]}/>
+                    <ReviewContainer reviews={gameInfo.recentReviews||[]} gameId={gameId} totalReview={gameInfo.reviews.totalReview}/>
                 </>
                 
             }

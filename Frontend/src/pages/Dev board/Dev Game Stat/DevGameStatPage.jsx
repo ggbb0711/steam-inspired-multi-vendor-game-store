@@ -46,7 +46,7 @@ export default function DevGameStatPage(){
                     <DevGameInfo gameInfo={gameInfo}></DevGameInfo>
                     <DevGameSales stat={gameSalesData}></DevGameSales>
                     <ReviewScore averageRating={gameInfo.averageRating} totalReview={gameInfo.reviews.totalReview} ratings={gameInfo.reviews.reviewScore}/>
-                    <RecentReview reviews={gameInfo.recentReviews}/>
+                    <RecentReview reviews={gameInfo.recentReviews} gameId={gameId} totalReview={gameInfo.reviews.totalReview}/>
                 </div>
             }
             

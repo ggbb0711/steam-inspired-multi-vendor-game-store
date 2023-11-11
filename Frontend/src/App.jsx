@@ -27,6 +27,7 @@ import LibraryLayOut from './pages/Library/LibraryLayOut'
 import LibraryPage from './pages/Library/LibraryPage'
 import SuccessPage from './pages/Store/SuccessPage'
 import FailPage from './pages/Store/FailPage'
+import GameReview from './pages/Store/Game Review/GameReview'
 
 
 
@@ -54,6 +55,7 @@ function App() {
                   <Route path='' element={<HomePage/>}></Route>
                   <Route path='/browse' element={<BrowseGame/>}></Route>
                   <Route path='/game/:gameId' element={<Game/>}></Route>
+                  <Route path='/review/:gameId' element={<GameReview/>}></Route>
                 </Route>
 
                 <Route path='/library' element={<LibraryLayOut/>}>

@@ -72,34 +72,38 @@ export default function ShoppingCartPopIn(){
             <div className={`fixed top-0 right-0 h-full w-[65vw] max-w-[350px] bg-gray-bright-blue flex flex-col gap-2 justify-between items-center p-4 z-[99] transition-all duration-200 ${isSlideIn?'':'translate-x-[150%]'}`}>
                 <RxCross2 className="text-text-white hover:text-red-500 absolute top-5 right-3 cursor-pointer" onClick={()=>setIsSlideIn(false)}/>
                 <p className="text-2xl text-bright-blue">Your cart</p>
-                <div className="w-full relative h-full max-h-[90%] flex flex-col items-center gap-2 overflow-y-scroll">
+                <div className="w-full relative max-h-[90%] overflow-hidden">
                     <div className={`absolute w-full h-full bg-black/60 top-0 left-0 flex justify-center items-center z-50 ${isLoading?'':'hidden'}`}>
                         <LoadingSpinner></LoadingSpinner>
                     </div>
-                    {(()=>{
-                        if(shoppingCart.length>0){
-                            return(
-                                shoppingCart.map((item,i)=>
-                                    <div key={i} className="w-full relative flex flex-col justify-center items-center">
-                                        <RxCross2 className="text-text-white hover:text-red-500 absolute top-0 right-0 cursor-pointer" onClick={()=>removeFromCart(i)}/>
-                                        <Link className="text-very-bright-blue" to={`/game/${item.game_id}`}>{item.title}</Link>
-                                        <div className="w-full max-w-[250px] aspect-[4/3] relative">
-                                            <img className="w-full h-full" src={item.thumbnailImage.src} alt={item.thumbnailImage.name} />
-                                            <Link className="absolute top-0 left-0 w-full h-full" to={`/game/${item.game_id}`}></Link>
+                    <div className="w-full h-full flex flex-col items-center gap-2 overflow-y-scroll">
+                        
+                        {(()=>{
+                            if(shoppingCart.length>0){
+                                return(
+                                    shoppingCart.map((item,i)=>
+                                        <div key={i} className="w-full relative flex flex-col justify-center items-center">
+                                            <RxCross2 className="text-text-white hover:text-red-500 absolute top-0 right-0 cursor-pointer" onClick={()=>removeFromCart(i)}/>
+                                            <Link className="text-very-bright-blue" to={`/game/${item.game_id}`}>{item.title}</Link>
+                                            <div className="w-full max-w-[250px] aspect-[4/3] relative">
+                                                <img className="w-full h-full" src={item.thumbnailImage.src} alt={item.thumbnailImage.name} />
+                                                <Link className="absolute top-0 left-0 w-full h-full" to={`/game/${item.game_id}`}></Link>
+                                            </div>
+                                            <p className="text-dark-green">{item.price}$</p>
                                         </div>
-                                        <p className="text-dark-green">{item.price}$</p>
-                                    </div>
+                                    )
                                 )
-                            )
-                        }
+                            }
 
-                        return(
-                            <div className="w-full h-full text-very-bright-blue text-center">
-                                <p>There are no items in your cart</p>
-                            </div>
-                        )
-                    })()}
+                            return(
+                                <div className="w-full h-full text-very-bright-blue text-center">
+                                    <p>There are no items in your cart</p>
+                                </div>
+                            )
+                        })()}
+                    </div>
                 </div>
+                
                 {shoppingCart.length>0?
                 <>
                     <p className="text-text-white">Total: <span className="text-dark-green">{total}$</span></p>

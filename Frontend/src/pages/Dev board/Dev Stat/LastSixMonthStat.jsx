@@ -25,7 +25,6 @@ export default function LastSixMonthStat({stat}){
                 copiesSold
             })
         }
-
         setStatState(newState)
     },[stat])
     return(
